@@ -1,6 +1,12 @@
 var container = document.getElementById("container");
 var world = document.getElementById("world");
 
+//variables
+var speed = 7;
+var forward = 0;
+var dz = 0;
+//---------
+
 var map = [
 //0-x,1-y,2-z, 3-rotX, 4-rotY, 5-rotZ, 6-height, 7-width, 8-color
 	[0,0,0,0,0,0,200,200,"orange"], //0. front wall
@@ -10,6 +16,23 @@ var map = [
 	[0,-100,-100,90,0,0,200,200,"brown"], //3.
 	[0,-100,100,90,0,0,200,200,"cyan"],
 ];
+
+document.addEventListener("keydown", (event) => {this.move(event, speed)});
+document.addEventListener("keyup", (event) => {this.move(event, 0)});
+
+function move(ev, vel){
+	if(ev.keyCode == 87){
+		forward = vel;
+	}
+}
+
+function player(x, y, z){
+	this.x = x;
+	this.y = y;
+	this.z = z;
+}
+
+var me = new player(0, 0, 0);
 
 function createWorld(){
 	for(let i = 0; i < map.length; i++){
@@ -28,9 +51,13 @@ function createWorld(){
 createWorld();
 
 function update(){
+	dz = forward;
+
+	me.z += dz;
+
  	world.style.transform = `
  		rotateY(${0}deg)
- 		translate3d(100px, 50px, 0px)`;
+ 		translate3d(500px, 300px, ${me.z}px)`;
 }
 
  timer = setInterval(update, 10);
