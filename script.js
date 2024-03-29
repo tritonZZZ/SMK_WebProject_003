@@ -9,6 +9,8 @@ var left = 0;
 var right = 0;
 var mouseX = mouseY = 0;
 var dz = 0;
+var lock = false;
+var canlock = true;
 //---------
 
 var map = [
@@ -25,8 +27,15 @@ document.addEventListener("keyup", (event) => {this.move(event, 0)});
 document.addEventListener("mousemove", (event) => {
 	mouseX = event.movementX;
 	mouseY = event.movementY;
-	console.log(`Mouse X = ${mouseX} and Mouse Y = ${mouseY}`);
 });
+document.addEventListener("pointerlockchange", (event) => {
+	lock = !lock;
+});
+container.onclick = function(){
+	if(!lock && canlock){
+		container.requestPointerLock();	
+	}
+}
 
 function move(ev, vel){
 	if(ev.keyCode == 87){
@@ -88,12 +97,14 @@ function update(){
 
 	mouseX = 0;
 
-	me.z += dz;
-	me.x += dx;
+	if(lock){
+		me.z += dz;
+		me.x += dx;
 
-	me.ry += dry;
+		me.ry += dry;
+	}
 
- 	world.style.transform = `
+	world.style.transform = `
  		translate3d(${me.x}px, ${me.y}px, ${me.z}px)
 		rotateY(${-me.ry}deg)
 		`;
