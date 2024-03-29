@@ -7,13 +7,14 @@ var forward = 0;
 var backward = 0;
 var left = 0;
 var right = 0;
+var mouseX = mouseY = 0;
 var dz = 0;
 //---------
 
 var map = [
 //0-x,1-y,2-z, 3-rotX, 4-rotY, 5-rotZ, 6-height, 7-width, 8-color
 	[0,100,0,90,0,0,2000,2000,"url('textures/grass.jpg')"], //0. floor
-	[0,0,-1000,0,0,0,200,2000,"url('textures/brick_wall.jpg')"], //front wall
+	[0,0,-1000,0,0,0,200,2000,"orange"], //front wall
 	[0,0,1000,0,0,0,200,2000,"url('textures/brick_wall.jpg')"], //hinder wall
 	[-1000,0,0,0,90,0,200,2000,"url('textures/brick_wall.jpg')"], //left wall
 	[1000,0,0,0,90,0,200,2000,"url('textures/brick_wall.jpg')"], //left wall
@@ -21,6 +22,11 @@ var map = [
 
 document.addEventListener("keydown", (event) => {this.move(event, speed)});
 document.addEventListener("keyup", (event) => {this.move(event, 0)});
+document.addEventListener("mousemove", (event) => {
+	mouseX = event.movementX;
+	mouseY = event.movementY;
+	console.log(`Mouse X = ${mouseX} and Mouse Y = ${mouseY}`);
+});
 
 function move(ev, vel){
 	if(ev.keyCode == 87){
@@ -37,13 +43,16 @@ function move(ev, vel){
 	}
 }
 
-function player(x, y, z){
+function player(x, y, z, rx, ry, rz){
 	this.x = x;
 	this.y = y;
 	this.z = z;
+	this.rx = rx;
+	this.ry = ry;
+	this.rz = rz;
 }
 
-var me = new player(0, 0, 0);
+var me = new player(0, 0, 0, 0, 0, 0);
 
 function createWorld(){
 	for(let i = 0; i < map.length; i++){
@@ -75,11 +84,19 @@ function update(){
 	dz = forward - backward;
 	dx = left - right;
 
+	dry = - mouseY;
+
+	mouseY = 0;
+
 	me.z += dz;
 	me.x += dx;
 
+	me.ry += dry;
+
  	world.style.transform = `
- 		translate3d(${me.x}px, ${me.y}px, ${me.z}px)`;
+ 		translate3d(${me.x}px, ${me.y}px, ${me.z}px)
+		rotateY(${-me.ry}deg)
+		`;
 }
 
  timer = setInterval(update, 10);
