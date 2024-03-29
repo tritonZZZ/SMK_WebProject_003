@@ -84,7 +84,7 @@ function update(){
 	dz = forward - backward;
 	dx = left - right;
 
-	dry = - mouseY;
+	dry = - mouseX;
 
 	mouseY = 0;
 
