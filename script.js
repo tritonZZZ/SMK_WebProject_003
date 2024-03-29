@@ -12,11 +12,11 @@ var dz = 0;
 
 var map = [
 //0-x,1-y,2-z, 3-rotX, 4-rotY, 5-rotZ, 6-height, 7-width, 8-color
-	[0,100,0,90,0,0,2000,2000,"grey"], //0. floor
-	[0,0,-1000,0,0,0,200,2000,"orange"], //front wall
-	[0,0,1000,0,0,0,200,2000,"green"], //hinder wall
-	[-1000,0,0,0,90,0,200,2000,"blue"], //left wall
-	[1000,0,0,0,90,0,200,2000,"violet"], //left wall
+	[0,100,0,90,0,0,2000,2000,"url('textures/grass.jpg')"], //0. floor
+	[0,0,-1000,0,0,0,200,2000,"url('textures/brick_wall.jpg')"], //front wall
+	[0,0,1000,0,0,0,200,2000,"url('textures/brick_wall.jpg')"], //hinder wall
+	[-1000,0,0,0,90,0,200,2000,"url('textures/brick_wall.jpg')"], //left wall
+	[1000,0,0,0,90,0,200,2000,"url('textures/brick_wall.jpg')"], //left wall
 ];
 
 document.addEventListener("keydown", (event) => {this.move(event, speed)});
