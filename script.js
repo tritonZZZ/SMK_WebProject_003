@@ -105,8 +105,10 @@ function update(){
 	}
 
 	world.style.transform = `
- 		translate3d(${me.x}px, ${me.y}px, ${me.z}px)
+		translateZ(600px)
 		rotateY(${-me.ry}deg)
+ 		translate3d(${me.x}px, ${me.y}px, ${me.z}px)
+		
 		`;
 }
 
