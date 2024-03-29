@@ -2,6 +2,7 @@ var container = document.getElementById("container");
 var world = document.getElementById("world");
 
 //variables
+var deg = Math.PI / 180; // 1 degree in radians because SIN and COS require angles in RADIANS!
 var speed = 7;
 var forward = 0;
 var backward = 0;
@@ -22,6 +23,7 @@ var map = [
 	[1000,0,0,0,90,0,200,2000,"url('textures/brick_wall.jpg')"], //left wall
 ];
 
+document.addEventListener("mousedown", (event) => {this.move(event, speed)})
 document.addEventListener("keydown", (event) => {this.move(event, speed)});
 document.addEventListener("keyup", (event) => {this.move(event, 0)});
 document.addEventListener("mousemove", (event) => {
@@ -90,24 +92,29 @@ function createWorld(){
 createWorld();
 
 function update(){
-	dz = forward - backward;
-	dx = left - right;
+	// cos A   -sin A    x    x cos A - z sin A        
+	// 	               *   =     
+	// sin A    cos A    z    x sin A + z cos A
+	let xxx = right - left;
+	let zzz = forward - backward
+	dx =  xxx * Math.cos(me.ry*deg) - zzz * Math.sin(me.ry*deg);
+	dz =  -zzz * Math.cos(me.ry*deg) - xxx * Math.sin(me.ry*deg);
 
 	dry = - mouseX;
 
 	mouseX = 0;
 
-	if(lock){
-		me.z += dz;
-		me.x += dx;
+	me.z += dz;
+	me.x += dx;
 
+	if(lock){
 		me.ry += dry;
 	}
 
 	world.style.transform = `
 		translateZ(600px)
 		rotateY(${-me.ry}deg)
- 		translate3d(${me.x}px, ${me.y}px, ${me.z}px)
+ 		translate3d(${-me.x}px, ${me.y}px, ${-me.z}px)
 		
 		`;
 }
