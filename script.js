@@ -86,7 +86,7 @@ function update(){
 
 	dry = - mouseX;
 
-	mouseY = 0;
+	mouseX = 0;
 
 	me.z += dz;
 	me.x += dx;
