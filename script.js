@@ -12,7 +12,11 @@ var dz = 0;
 
 var map = [
 //0-x,1-y,2-z, 3-rotX, 4-rotY, 5-rotZ, 6-height, 7-width, 8-color
-	[0,0,0,90,0,0,200,200,"orange"], //0. front wall
+	[0,100,0,90,0,0,2000,2000,"grey"], //0. floor
+	[0,0,-1000,0,0,0,200,2000,"orange"], //front wall
+	[0,0,1000,0,0,0,200,2000,"green"], //hinder wall
+	[-1000,0,0,0,90,0,200,2000,"blue"], //left wall
+	[1000,0,0,0,90,0,200,2000,"violet"], //left wall
 ];
 
 document.addEventListener("keydown", (event) => {this.move(event, speed)});
@@ -50,15 +54,16 @@ function createWorld(){
 		myElement.style.width = `${map[i][7]}px`;
 		myElement.style.background = `${map[i][8]}`;
 		myElement.style.opacity = 0.8;
-		myElement.style.transform = `
-			rotateX(${map[i][3]}deg) 
-			rotateY(${map[i][4]}deg) 
-			rotateZ(${map[i][5]}deg) 
+		myElement.style.transform = `			
 			translate3d(
 				${(600 - (map[i][7]/2) + map[i][0])}px, 
 				${(400 - (map[i][6]/2) + map[i][1])}px, 
 				${map[i][2]}px
 			)
+
+			rotateX(${map[i][3]}deg) 
+			rotateY(${map[i][4]}deg) 
+			rotateZ(${map[i][5]}deg) 
 		`;
 		world.append(myElement);
 	}
@@ -74,7 +79,6 @@ function update(){
 	me.x += dx;
 
  	world.style.transform = `
- 		rotateY(${0}deg)
  		translate3d(${me.x}px, ${me.y}px, ${me.z}px)`;
 }
 
