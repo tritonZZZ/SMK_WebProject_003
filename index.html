@@ -1,16 +1,23 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>
-			Web project
-		</title>
-		<link rel="stylesheet" href="style.css">
-	</head>
-	<body>
-		<div id=container>
-			<div id="world"></div>
-			<div id="player"></div>
+<head>
+	<title>Web project</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<div id="container">
+		<div id="world"></div>
+		<div id="player"></div>
+	</div>
+	<div id="menu" class="menu">
+		<h1>Game Menu</h1>
+		<button onclick="deactivateMenu()">Continue</button>
+		<button onclick="displayRules()">Rules</button>
+		<div id="rules" style="display:none;">
+			<p>W A S D is used for movement.</p>
+			<p>The mouse controls the camera.</p>
 		</div>
-	</body>
+	</div>
+	<script src="script.js"></script>
+</body>
 </html>
-<script src="script.js"></script>
